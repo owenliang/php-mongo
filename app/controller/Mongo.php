@@ -61,4 +61,30 @@ class Mongo
 
         printf("Deleted %d document(s)\n", $deleteResult->getDeletedCount());
     }
+
+    // 这是一个benchmark
+    public function bulk()
+    {
+        $st = microtime(true);
+
+        $batch = [];
+        for ($i = 0; $i < 10000000; ++$i) {
+            $batch[] = [
+                'insertOne' => [
+                    [
+                        'username' => 'admin',
+                        'email' => 'admin@example.com',
+                        'name' => 'Admin User',
+                    ]
+                ]
+            ];
+            if ($i % 1000 == 0) {
+                $this->collection->bulkWrite($batch, ['ordered' => false]);
+                $batch = [];
+            }
+            if ($i % 10000 ==0) {
+                echo $i / (microtime(true) - $st) . PHP_EOL;
+            }
+        }
+    }
 }

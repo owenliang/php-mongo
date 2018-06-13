@@ -12,6 +12,7 @@ return [
             '/mongo/find' => ['Mongo', 'find'],
             '/mongo/update' => ['Mongo', 'update'],
             '/mongo/delete' => ['Mongo', 'delete'],
+            '/mongo/bulk' => ['Mongo', 'bulk'],
         ],
         // pcre正则路由
         'regex' => [
